@@ -1,10 +1,9 @@
 from time import gmtime, strftime, sleep
 import telepot
-from pprint import pprint
 
-from Airbnbs import *
+# from Airbnbs import *
 from Airlines import *
-from Tour_guides import *
+# from Tour_guides import *
 # from Responsers import *
 
 
@@ -46,6 +45,7 @@ def on_chat_message(msg):
 
     if content_type != "text":
         return
+        
     try:
         content_type = msg["entities"][0]["type"]
         content = command_processor(msg)
@@ -61,7 +61,7 @@ def on_chat_message(msg):
             ],
                 one_time_keyboard=True)
             bot.sendMessage(
-                chat_id, "Okay, which one do you want? \n Powered by <a href="Skyscanner.net/">Skyscanner</a> ", parse_mode="HTML" ,reply_markup=markup)
+                chat_id, """Okay, which one do you want? \n Powered by <a href="Skyscanner.net/">Skyscanner</a> """, parse_mode="HTML" ,reply_markup=markup)
 
         elif content == "Get current airline price":
             bot.sendMessage(

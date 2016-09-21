@@ -8,7 +8,6 @@ try:
 except ImportError:
     from default_config import *
 
-
 class Tour_guide(object):
 
     def __init__(self, ):
@@ -23,8 +22,7 @@ class Tour_guide(object):
         # input are standard.
 
     def get_data(self):
-        # TODO: This function should be returning the final usable data in a
-        # dict.
+        # TODO: This function should be returning the final usable data.
 
         # Other functions:
         # All other functions, except get_data(),
@@ -36,8 +34,8 @@ class Tour_guide(object):
         # def __pre_process(self, data):
         #   return ...
 
-        # You could regard the following part as testing which will run only if
-        # you execuate itself.
+# You could regard the following part as testing which will run only if
+# you execuate itself.
 if __name__ == "__main__":
     from pprint import pprint
     inst = Tour_guide()

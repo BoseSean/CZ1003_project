@@ -2,6 +2,6 @@
 
 Telegram_TOKEN = ''
 # """
-# https://api.telegram.org/bot288363730:AAGWptfVuDW98SgCx6EeANuexVyjTa6yv1c/getUpdates
+# https://api.telegram.org/bot
 # """
 Skyscanner_Flight_APIKEY = ''

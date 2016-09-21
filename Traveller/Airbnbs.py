@@ -21,10 +21,10 @@ class Airbnbs(object):
         #   23/09/2016 -- 2016-09-23
         # We will furthur decide how to handle them, for now just assume all
         # input are standard.
+        
 
-    def get_data(self):
-        # TODO: This function should be returning the final usable data in a
-        # dict.
+    def get_data(self, ):
+        # TODO: This function should be returning the final usable data.
 
         # Other functions:
         # All other functions, except get_data(),
