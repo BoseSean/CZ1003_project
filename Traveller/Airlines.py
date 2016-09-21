@@ -1,3 +1,10 @@
+#  ------License------
+#  You must display the text “Powered by”, followed by the Skyscanner logo, as shown below
+#  Powered by (Skyscanner Logo)
+#  The whole element must link to Skyscanner.net.
+#  You can choose exactly how and where to display this, but it should be obvious to end-users
+#  when Skyscanner data has been used.
+
 from skyscanner.skyscanner import Flights
 import json
 from config import Skyscanner_Flight_APIKEY
@@ -16,6 +23,16 @@ class Airlines():
                  currency='SGD',
                  locale='en-GB',
                  adults=1):
+
+    # Initialize the data needed. For now, do not need to handle the convertion between 
+    # readable name and standard code needed for api. 
+    # For example: 
+    #   Singapore -- SG, 
+    #   China -- 86 
+    #   John F Kennedy International Airport -- JFK
+    #   23/09/2016 -- 2016-09-23
+    # We will furthur decide how to handle them, for now just assume all input are standard.
+    
         #  Get live information of flight
         self.flights_service = Flights(Skyscanner_Flight_APIKEY)
         # self.originplace = originplace
@@ -31,8 +48,9 @@ class Airlines():
             inbounddate=inbounddate,
             adults=adults).parsed
 
-    def get_top(self):
-        Flights = [{} for _ in range(MAX_FLIGHTS)]
+    def get_data(self):
+        # TODO: This function should be returning the final usable data in a dict.
+        flights = [{} for _ in range(MAX_FLIGHTS)]
         i = 0
         counter = 0
         while True:
@@ -66,7 +84,7 @@ class Airlines():
                         FlightsLive['Inbound_Stops'] = self.__findplaces(json.dumps(
                             self.all_result['Legs'][self.__inboundleg(self.all_result, i)]['Stops'][0]), self.all_result)
                         j += 1
-                        Flights[counter] = FlightsLive
+                        flights[counter] = FlightsLive
                         counter += 1
                     except IndexError:
                         break
@@ -74,8 +92,18 @@ class Airlines():
             except IndexError:
                 print(str(i) + " flights details has been listed")
                 break
-        return Flights
+        return flights
     #  Find respective OutboundLegId leg
+
+    # Other functions:
+    # All other functions, except get_data(), 
+    # 1. should make name start with __
+    # 2. should make self be the first parameter
+    # for example: 
+    # 
+    # # Pre-process the data needed 
+    # def __pre_process(self, data):
+    #   return ...
 
     def __outboundleg(self, all_result, i):
         k = 0
@@ -136,53 +164,13 @@ class Airlines():
             else:
                 k += 1
 
-
+# You could regard the following part as testing which will run only if you execuate itself.
 if __name__ == "__main__":
     from pprint import pprint
     a = Airlines(
         originplace='SIN-sky',
         destinationplace='KHN-sky',
         outbounddate='2016-09-23',
-        inbounddate='2016-10-04').get_top()
+        inbounddate='2016-10-04').get_data()
     pprint(a)
     print("Seem to be working well.")
-
-    # # #  get agents (may delete later)
-    # # FlightsLive['Agents'] = json.dumps(self.all_result['Itineraries'][i]["PricingOptions"][j]["Agents"][0])
-    # #  get price
-    # FlightsLive['Price'] = json.dumps(self.all_result['Itineraries'][i]["PricingOptions"][j]["Price"])
-    # # # get OutboundLegId (may delete later)
-    # # FlightsLive['OutboundLegId'] = json.dumps(self.all_result['Itineraries'][i]["OutboundLegId"])
-    # #  get InboundLegId (may delete later)
-    # # FlightsLive['InboundLegId'] = json.dumps(self.all_result['Itineraries'][i]["InboundLegId"])
-    # FlightsLive['Outbound_Departure'] = json.dumps(self.all_result['Legs'][self.__outboundleg(self.all_result, i)]['Departure'])
-    # FlightsLive['Outbound_Arrival'] = json.dumps(self.all_result['Legs'][self.__outboundleg(self.all_result, i)]['Arrival'])
-
-#     # Process information
-#     i = 0
-#     while True:
-#         FlightsLive = {}
-#         try:
-#             json.dumps(result['Itineraries'][i]["PricingOptions"])
-#             j = 0
-#             while True:
-#                 try:
-#                     #  get agents (may delete later)
-#                     FlightsLive['Agents'] = json.dumps(result['Itineraries'][i]["PricingOptions"][j]["Agents"][0])
-#                     #  get price
-#                     FlightsLive['Price'] = json.dumps(result['Itineraries'][i]["PricingOptions"][j]["Price"])
-#                     # get OutboundLegId (may delete later)
-#                     FlightsLive['OutboundLegId'] = json.dumps(result['Itineraries'][i]["OutboundLegId"])
-#                     #  get InboundLegId (may delete later)
-#                     FlightsLive['InboundLegId'] = json.dumps(result['Itineraries'][i]["InboundLegId"])
-#                     FlightsLive['Outbound_Departure'] = json.dumps(result['Legs'][outboundleg(result,i)]['Departure'])
-#                     FlightsLive['Outbound_Arrival'] = json.dumps(result['Legs'][outboundleg(result, i)]['Arrival'])
-#                     j += 1
-#                     print(json.dumps(FlightsLive, indent = 4))
-#                 except IndexError:
-#                     break
-#             i += 1
-#         except IndexError:
-#             print(str(i) + " flights details has been listed")
-#             break
-#     print("Program terminated.")

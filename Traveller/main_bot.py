@@ -55,7 +55,7 @@ def on_chat_message(msg):
             ],
                 one_time_keyboard=True)
             bot.sendMessage(
-                chat_id, "Okay, which one do you want?", reply_markup=markup)
+                chat_id, "Okay, which one do you want? \n Powered by <a href="Skyscanner.net/">Skyscanner</a> ", parse_mode="HTML" ,reply_markup=markup)
 
         elif content == "Get current airline price":
             bot.sendMessage(
