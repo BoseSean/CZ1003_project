@@ -42,22 +42,29 @@ class Airlines():
                 j = 0
                 while True:
                     try:
-                        #  get agents (may delete later)
-                        FlightsLive['Agents'] = json.dumps(self.all_result['Itineraries'][i][
-                                                           "PricingOptions"][j]["Agents"][0])
                         #  get price
                         FlightsLive['Price'] = json.dumps(self.all_result['Itineraries'][
                                                           i]["PricingOptions"][j]["Price"])
                         # get OutboundLegId (may delete later)
-                        FlightsLive['OutboundLegId'] = json.dumps(
-                            self.all_result['Itineraries'][i]["OutboundLegId"])
-                        #  get InboundLegId (may delete later)
-                        FlightsLive['InboundLegId'] = json.dumps(
-                            self.all_result['Itineraries'][i]["InboundLegId"])
+                        # FlightsLive['OutboundLegId'] = json.dumps(self.all_result['Itineraries'][i]["OutboundLegId"])
                         FlightsLive['Outbound_Departure'] = json.dumps(
                             self.all_result['Legs'][self.__outboundleg(self.all_result, i)]['Departure'])
                         FlightsLive['Outbound_Arrival'] = json.dumps(
                             self.all_result['Legs'][self.__outboundleg(self.all_result, i)]['Arrival'])
+                        FlightsLive['Outbound_Carriers'] = self.__findcarriers(json.dumps(self.all_result[
+                                                                               'Legs'][self.__outboundleg(self.all_result, i)]['Carriers'][0]), self.all_result)
+                        FlightsLive['Outbound_Stops'] = self.__findplaces(json.dumps(self.all_result[
+                                                                          'Legs'][self.__outboundleg(self.all_result, i)]['Stops'][0]), self.all_result)
+                        # get InboundLegId (may delete later)
+                        # FlightsLive['InboundLegId'] = json.dumps(self.all_result['Itineraries'][i]["InboundLegId"])
+                        FlightsLive['Inbound_Departure'] = json.dumps(
+                            self.all_result['Legs'][self.__inboundleg(self.all_result, i)]['Departure'])
+                        FlightsLive['Inbound_Arrival'] = json.dumps(
+                            self.all_result['Legs'][self.__inboundleg(self.all_result, i)]['Arrival'])
+                        FlightsLive['Inbound_Carriers'] = self.__findcarriers(json.dumps(
+                            self.all_result['Legs'][self.__inboundleg(self.all_result, i)]['Carriers'][0]), self.all_result)
+                        FlightsLive['Inbound_Stops'] = self.__findplaces(json.dumps(
+                            self.all_result['Legs'][self.__inboundleg(self.all_result, i)]['Stops'][0]), self.all_result)
                         j += 1
                         Flights[counter] = FlightsLive
                         counter += 1
@@ -107,6 +114,28 @@ class Airlines():
             else:
                 k += 1
 
+    # Find respective places
+    def __findplaces(self, places, all_result):
+        k = 0
+        while True:
+            if places == json.dumps(all_result['Places'][k]['Id']):
+                places = json.dumps(all_result['Places'][k]['Name'])
+                return places
+                break
+            else:
+                k += 1
+
+    # Find respective carriers
+    def __findcarriers(self, carriers, all_result):
+        k = 0
+        while True:
+            if carriers == json.dumps(all_result['Carriers'][k]['Id']):
+                carriers = json.dumps(all_result['Carriers'][k]['Name'])
+                return carriers
+                break
+            else:
+                k += 1
+
 
 if __name__ == "__main__":
     from pprint import pprint
@@ -116,7 +145,19 @@ if __name__ == "__main__":
         outbounddate='2016-09-23',
         inbounddate='2016-10-04').get_top()
     pprint(a)
-    print("Fi")
+    print("Seem to be working well.")
+
+    # # #  get agents (may delete later)
+    # # FlightsLive['Agents'] = json.dumps(self.all_result['Itineraries'][i]["PricingOptions"][j]["Agents"][0])
+    # #  get price
+    # FlightsLive['Price'] = json.dumps(self.all_result['Itineraries'][i]["PricingOptions"][j]["Price"])
+    # # # get OutboundLegId (may delete later)
+    # # FlightsLive['OutboundLegId'] = json.dumps(self.all_result['Itineraries'][i]["OutboundLegId"])
+    # #  get InboundLegId (may delete later)
+    # # FlightsLive['InboundLegId'] = json.dumps(self.all_result['Itineraries'][i]["InboundLegId"])
+    # FlightsLive['Outbound_Departure'] = json.dumps(self.all_result['Legs'][self.__outboundleg(self.all_result, i)]['Departure'])
+    # FlightsLive['Outbound_Arrival'] = json.dumps(self.all_result['Legs'][self.__outboundleg(self.all_result, i)]['Arrival'])
+
 #     # Process information
 #     i = 0
 #     while True:
