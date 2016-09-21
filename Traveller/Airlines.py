@@ -7,7 +7,13 @@
 
 from skyscanner.skyscanner import Flights
 import json
-from config import Skyscanner_Flight_APIKEY
+# If any confiruration needed such as token, password or API_key, please define in config.py
+# The following command will automaticly import default_config.py if there
+# is no config.py.
+try:
+    from config import Skyscanner_Flight_APIKEY
+except ImportError:
+    from default_config import Skyscanner_Flight_APIKEY
 
 MAX_FLIGHTS = 10
 

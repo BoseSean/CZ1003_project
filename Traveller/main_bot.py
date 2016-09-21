@@ -14,7 +14,13 @@ from telepot.namedtuple import (
     InlineKeyboardMarkup, InlineKeyboardButton,
     ReplyKeyboardMarkup, KeyboardButton)
 
-from config import Telegram_TOKEN
+# If any confiruration needed such as token, password or API_key, please define in config.py
+# The following command will automaticly import default_config.py if there
+# is no config.py.
+try:
+    from config import Telegram_TOKEN
+except ImportError:
+    from default_config import Telegram_TOKEN
 
 
 def log(log_message, msg):
