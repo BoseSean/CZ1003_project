@@ -5,7 +5,7 @@ import telepot
 from Airlines import *
 # from Tour_guides import *
 # from Responsers import *
-import db
+
 
 import telepot.helper
 from telepot.namedtuple import (
@@ -41,11 +41,10 @@ def command_processor(msg):
 
 def on_chat_message(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
-    log("Message", msg)
-
+    
     if content_type != "text":
         return
-
+    log("Message", msg)
     try:
         content_type = msg["entities"][0]["type"]
         content = command_processor(msg)
@@ -92,8 +91,6 @@ def on_chat_message(msg):
         # if content[0] == "alert":
         #     Airlines_Reminder
 
-# Initialize database
-db.start_db()
 
 try:
     bot = telepot.Bot(Telegram_TOKEN)

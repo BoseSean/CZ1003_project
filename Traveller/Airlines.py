@@ -63,7 +63,6 @@ class Airlines():
                 outbounddate=outbounddate,
                 inbounddate=inbounddate,
                 adults=int(adults)).parsed
-            import pdb; pdb.set_trace()
         self.response()
 
     def __check_input(self, args):
