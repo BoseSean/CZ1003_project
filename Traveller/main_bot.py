@@ -5,7 +5,7 @@ import telepot
 from Airlines import *
 # from Tour_guides import *
 # from Responsers import *
-
+import db
 
 import telepot.helper
 from telepot.namedtuple import (
@@ -45,7 +45,7 @@ def on_chat_message(msg):
 
     if content_type != "text":
         return
-        
+
     try:
         content_type = msg["entities"][0]["type"]
         content = command_processor(msg)
@@ -54,14 +54,16 @@ def on_chat_message(msg):
         content = msg["text"]
 
     if content_type == "text":
-        if content == "airlines assistant":
+        if content == "Airlines Assistant":
             markup = ReplyKeyboardMarkup(keyboard=[
                 [KeyboardButton(text="Get current airline price")],
                 [KeyboardButton(text="Set airline price alert")]
             ],
                 one_time_keyboard=True)
             bot.sendMessage(
-                chat_id, """Okay, which one do you want? \n Powered by <a href="Skyscanner.net/">Skyscanner</a> """, parse_mode="HTML" ,reply_markup=markup)
+                chat_id, """This is your airlines assistant, powered by <a href="Skyscanner.net/">Skyscanner</a>\nWhat can I do for you""",
+                parse_mode="HTML",
+                reply_markup=markup)
 
         elif content == "Get current airline price":
             bot.sendMessage(
@@ -76,7 +78,7 @@ def on_chat_message(msg):
             )
         else:
             markup = ReplyKeyboardMarkup(keyboard=[
-                [KeyboardButton(text="airlines assistant")],
+                [KeyboardButton(text="Airlines Assistant")],
             ],
                 one_time_keyboard=True)
             bot.sendMessage(
@@ -86,15 +88,18 @@ def on_chat_message(msg):
             )
     elif content_type == "bot_command":
         if content[0] == "check":
-            Airlines(content[1:]).response(chat_id)
+            Airlines(content[1:], bot, chat_id)
         # if content[0] == "alert":
         #     Airlines_Reminder
 
-bot = telepot.Bot(Telegram_TOKEN)
-# bot.message_loop(handle)
-# pprint(bot.getUpdates())
-bot.message_loop({"chat": on_chat_message})
-# print ("Listening ...")
-while 1:
+# Initialize database
+db.start_db()
 
-    sleep(100)
+try:
+    bot = telepot.Bot(Telegram_TOKEN)
+    bot.message_loop({"chat": on_chat_message})
+    while 1:
+
+        sleep(100)
+except KeyboardInterrupt:
+    db.finalize_db()

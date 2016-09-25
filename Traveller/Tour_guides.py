@@ -4,7 +4,7 @@ import requests
 # The following command will automaticly import default_config.py if there
 # is no config.py.
 try:
-    from config import *
+    from config import 
 except ImportError:
     from default_config import *
 
