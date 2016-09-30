@@ -5,6 +5,7 @@ import telepot
 from Airlines import *
 # from Tour_guides import *
 # from Responsers import *
+from Airbnbs import *
 
 
 import telepot.helper
@@ -53,10 +54,10 @@ def on_chat_message(msg):
         content = msg["text"]
 
     if content_type == "text":
-        if content == "Airlines Assistant":
+        if content == "Travel Assistant":
             markup = ReplyKeyboardMarkup(keyboard=[
                 [KeyboardButton(text="Get current airline price")],
-                [KeyboardButton(text="Set airline price alert")]
+                [KeyboardButton(text="Find a hotel at Airbnb")]
             ],
                 one_time_keyboard=True)
             bot.sendMessage(
@@ -70,14 +71,14 @@ def on_chat_message(msg):
                 "Start with /check and seperate with, \n<origin place> \n<destination place> \n<adult passengers> \n<outbound date> \n<inbounddate>",
             )
 
-        elif content == "Set airline price alert":
+        elif content == "Find a hotel at Airbnb":
             bot.sendMessage(
                 chat_id,
-                "Start with /alert and seperate with, \n<origin place> \n<destination place> \n<adult passengers> \n<outbound date> \n<inbounddate> \n<target price>",
+                "Start with /airbnb and seperate with, \n<location> \n<checkin date>  (dd-mm-yy) \n<checkout date>  (dd-mm-yy) \n<guests>",
             )
         else:
             markup = ReplyKeyboardMarkup(keyboard=[
-                [KeyboardButton(text="Airlines Assistant")],
+                [KeyboardButton(text="Travel Assistant")],
             ],
                 one_time_keyboard=True)
             bot.sendMessage(
@@ -87,7 +88,19 @@ def on_chat_message(msg):
             )
     elif content_type == "bot_command":
         if content[0] == "check":
+            bot.sendMessage(
+                chat_id,
+                "Message received.",
+            )
             Airlines(content[1:], bot, chat_id)
+        # if content[0] == "alert":
+        #     Airlines_Reminder
+        if content[0] == "airbnb":
+            bot.sendMessage(
+                chat_id,
+                "Message received.",
+            )
+            Airbnbs(content[1:], bot, chat_id)
         # if content[0] == "alert":
         #     Airlines_Reminder
 
@@ -100,3 +113,4 @@ try:
         sleep(100)
 except KeyboardInterrupt:
     db.finalize_db()
+
