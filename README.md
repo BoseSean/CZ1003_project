@@ -2,7 +2,7 @@
 
 This is a backend application for telegram bot which could provide useful information for Travellers, such as airlines discounts and airbnb around you.
 
-##What does it do?
+## What does it do?
 
 1. Track the price of air tickets for the trip around user’s preferred dates (user will be prompted to select one or more preferred dates) and notify the user through telegram when the price gets lower. The tracking will start at the moment user inputs necessary information.
 
@@ -14,10 +14,10 @@ This is a backend application for telegram bot which could provide useful inform
 
 5. User will be able to cancel any of above tracing and notification with immediate effect at any time.
 
-##Usage
+## Usage
 
 
-##Requirments
+## Requirments
 
 pyhton3
 * [Ruquests](http://docs.python-requests.org/en/master/user/install/#install)
