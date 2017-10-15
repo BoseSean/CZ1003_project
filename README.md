@@ -20,7 +20,7 @@ This is a backend application for telegram bot which could provide useful inform
 ## Requirments
 
 pyhton3
-* [Ruquests](http://docs.python-requests.org/en/master/user/install/#install)
+* [Requests](http://docs.python-requests.org/en/master/user/install/#install)
 * [Telepot](http://telepot.readthedocs.io/en/latest/)
 * [Beautifulsoup4](https://www.crummy.com/software/BeautifulSoup/bs4/doc/#installing-beautiful-soup)
 * [skyscanner](https://github.com/Skyscanner/skyscanner-python-sdk)
